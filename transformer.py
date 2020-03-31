@@ -2,6 +2,7 @@ import json
 import re
 import os
 import numpy as np
+import sys
                                                                           
 def transform(direc,spl):
 	names = ['train','dev']
@@ -74,4 +75,8 @@ def transform(direc,spl):
 	print(file_name_dev + ' has been saved!')
 
 if __name__ == "__main__":
-	transform('./data', .5) 
+	if len(sys.argv) != 2:
+		print("Expected usage: python transformer.py <data repo>")
+		sys.exit()
+	data_repo = sys.argv[1]
+	transform(data_repo, .5) 
