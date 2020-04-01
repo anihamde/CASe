@@ -306,10 +306,10 @@ def convert_examples_to_features(examples, tokenizer, max_seq_length,
                 # we throw it out, since there is nothing to predict.
                 doc_start = doc_span.start
                 doc_end = doc_span.start + doc_span.length - 1
-                if (example.start_position < doc_start or
-                        example.end_position < doc_start or
-                        example.start_position > doc_end or example.end_position > doc_end):
-                    continue
+#                 if (example.start_position < doc_start or
+#                         example.end_position < doc_start or
+#                         example.start_position > doc_end or example.end_position > doc_end):
+#                     continue
 
                 doc_offset = len(query_tokens) + 2
                 start_position = tok_start_position - doc_start + doc_offset
@@ -1315,8 +1315,8 @@ def adaptation_stage(args, tokenizer, n_gpu, device, logger, debug=False):
     eval_features, eval_examples = read_features_and_examples(args, args.target_predict_file, tokenizer, logger,
         use_simple_feature=False, read_examples=True, limit=read_limit)
     
-    print(train_features[0])
-    print(eval_features[0])
+#     print(train_features[0])
+#     print(eval_features[0])
 
     removed_feature_index = set()
     new_generated_train_features = []
