@@ -170,7 +170,9 @@ def read_squad_examples(input_file, is_training, logger):
                     answer_offset = answer["answer_start"]
                     answer_length = len(orig_answer_text)
                     start_position = char_to_word_offset[answer_offset]
-                    end_position = char_to_word_offset[answer_offset + answer_length - 1]
+                    
+                    # ani change for COVID UNLABELEDDDD cases
+                    end_position = char_to_word_offset[max(answer_offset + answer_length - 1,len(char_to_word_offset))]
                     answers = list(map(lambda x: x['text'], qa['answers']))
                     # Only add answers where the text can be exactly recovered from the
                     # document. If this CAN'T happen it's likely due to weird Unicode
