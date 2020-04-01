@@ -767,6 +767,11 @@ def read_features_and_examples(args, file_name, tokenizer, logger, use_simple_fe
     cached_features_file = file_name + '_{0}_{1}_{2}_{3}'.format(
         list(filter(None, args.bert_model.split('/'))).pop(), str(args.max_seq_length), str(args.doc_stride),
         str(args.max_query_length))
+    
+    
+    # FOR COVID ADVERSARIAL
+    cached_features_file = file_name
+    
     if use_simple_feature:
         cached_features_file = cached_features_file + '_simple'
 
