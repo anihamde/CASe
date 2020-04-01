@@ -173,8 +173,8 @@ def read_squad_examples(input_file, is_training, logger):
                         start_position = char_to_word_offset[answer_offset]
 
                         # ani change for COVID UNLABELEDDDD cases
-                        indexval = max(min(answer_offset + answer_length - 1,len(char_to_word_offset)),0)
-                        print(char_to_word_offset,indexval,answer_offset,answer_length)
+                        indexval = max(min(answer_offset + answer_length - 1,len(char_to_word_offset)-1),0)
+#                         print(char_to_word_offset,indexval,answer_offset,answer_length)
                         end_position = char_to_word_offset[indexval]
                         answers = list(map(lambda x: x['text'], qa['answers']))
                         # Only add answers where the text can be exactly recovered from the
