@@ -189,7 +189,7 @@ def read_squad_examples(input_file, is_training, logger):
                         if actual_text.find(cleaned_answer_text) == -1:
                             logger.warning("Could not find answer: '%s' vs. '%s'",
                                                actual_text, cleaned_answer_text)
-                            continue
+#                             continue
 
                     example = SquadExample(
                         qas_id=qas_id,
