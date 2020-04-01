@@ -1314,6 +1314,9 @@ def adaptation_stage(args, tokenizer, n_gpu, device, logger, debug=False):
     logger.info("***** Reading Evaluation Samples *****")
     eval_features, eval_examples = read_features_and_examples(args, args.target_predict_file, tokenizer, logger,
         use_simple_feature=False, read_examples=True, limit=read_limit)
+    
+    print(train_features[0])
+    print(eval_features[0])
 
     removed_feature_index = set()
     new_generated_train_features = []
