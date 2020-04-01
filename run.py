@@ -154,50 +154,51 @@ def read_squad_examples(input_file, is_training, logger):
                     prev_is_whitespace = False
                 char_to_word_offset.append(len(doc_tokens) - 1)
 
-            for qa in paragraph["qas"]:
-                qas_id = qa["id"]
-                question_text = qa["question"]
-                start_position = None
-                end_position = None
-                orig_answer_text = None
-                answers = None
-                if is_training:
-                    # if len(qa["answers"]) != 1:
-                    #     raise ValueError(
-                    #         "For training, each question should have exactly 1 answer.")
-                    answer = qa["answers"][0]
-                    orig_answer_text = answer["text"]
-                    answer_offset = answer["answer_start"]
-                    answer_length = len(orig_answer_text)
-                    start_position = char_to_word_offset[answer_offset]
-                    
-                    # ani change for COVID UNLABELEDDDD cases
-                    indexval = max(min(answer_offset + answer_length - 1,len(char_to_word_offset)),0)
-                    end_position = char_to_word_offset[indexval]
-                    answers = list(map(lambda x: x['text'], qa['answers']))
-                    # Only add answers where the text can be exactly recovered from the
-                    # document. If this CAN'T happen it's likely due to weird Unicode
-                    # stuff so we will just skip the example.
-                    #
-                    # Note that this means for training mode, every example is NOT
-                    # guaranteed to be preserved.
-                    actual_text = " ".join(doc_tokens[start_position:(end_position + 1)])
-                    cleaned_answer_text = " ".join(
-                        whitespace_tokenize(orig_answer_text))
-                    if actual_text.find(cleaned_answer_text) == -1:
-                        logger.warning("Could not find answer: '%s' vs. '%s'",
-                                           actual_text, cleaned_answer_text)
-                        continue
+            if len(char_to_word_offset) > 0:
+                for qa in paragraph["qas"]:
+                    qas_id = qa["id"]
+                    question_text = qa["question"]
+                    start_position = None
+                    end_position = None
+                    orig_answer_text = None
+                    answers = None
+                    if is_training:
+                        # if len(qa["answers"]) != 1:
+                        #     raise ValueError(
+                        #         "For training, each question should have exactly 1 answer.")
+                        answer = qa["answers"][0]
+                        orig_answer_text = answer["text"]
+                        answer_offset = answer["answer_start"]
+                        answer_length = len(orig_answer_text)
+                        start_position = char_to_word_offset[answer_offset]
 
-                example = SquadExample(
-                    qas_id=qas_id,
-                    question_text=question_text,
-                    doc_tokens=doc_tokens,
-                    orig_answer_text=orig_answer_text,
-                    start_position=start_position,
-                    end_position=end_position,
-                    answers=answers)
-                examples.append(example)
+                        # ani change for COVID UNLABELEDDDD cases
+                        indexval = max(min(answer_offset + answer_length - 1,len(char_to_word_offset)),0)
+                        end_position = char_to_word_offset[indexval]
+                        answers = list(map(lambda x: x['text'], qa['answers']))
+                        # Only add answers where the text can be exactly recovered from the
+                        # document. If this CAN'T happen it's likely due to weird Unicode
+                        # stuff so we will just skip the example.
+                        #
+                        # Note that this means for training mode, every example is NOT
+                        # guaranteed to be preserved.
+                        actual_text = " ".join(doc_tokens[start_position:(end_position + 1)])
+                        cleaned_answer_text = " ".join(
+                            whitespace_tokenize(orig_answer_text))
+                        if actual_text.find(cleaned_answer_text) == -1:
+                            logger.warning("Could not find answer: '%s' vs. '%s'",
+                                               actual_text, cleaned_answer_text)
+                            continue
+
+                    example = SquadExample(
+                        qas_id=qas_id,
+                        question_text=question_text,
+                        doc_tokens=doc_tokens,
+                        orig_answer_text=orig_answer_text,
+                        start_position=start_position,
+                        end_position=end_position,
+                        answers=answers)
+                    examples.append(example)
     return examples
 
 
