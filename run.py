@@ -128,7 +128,7 @@ def read_squad_len(input_file):
 
 def read_squad_examples(input_file, is_training, logger):
     """Read a SQuAD json file into a list of SquadExample."""
-    with open(input_file, "rb") as reader:
+    with open(input_file, "r", encoding='utf-8') as reader:
         input_data = json.load(reader)["data"]
 
     def is_whitespace(c):
