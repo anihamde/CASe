@@ -770,7 +770,7 @@ def read_features_and_examples(args, file_name, tokenizer, logger, use_simple_fe
     
     
     # FOR COVID ADVERSARIAL
-#     cached_features_file = file_name
+    cached_features_file = file_name
     
     if use_simple_feature:
         cached_features_file = cached_features_file + '_simple'
