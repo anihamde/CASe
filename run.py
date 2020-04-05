@@ -1300,9 +1300,6 @@ def prepare_model(args, device, n_gpu):
 def adaptation_stage(args, tokenizer, n_gpu, device, logger, debug=False):
     model, adv_net, random_layer = prepare_model(args, device, n_gpu)
     best_acc, best_f1 = 0, 0
-    
-    print(args.source_train_file)
-    return 0
 
     read_limit = None
     if debug:
